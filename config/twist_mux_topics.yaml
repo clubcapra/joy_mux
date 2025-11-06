@@ -1,0 +1,28 @@
+# Input topics handled/muxed.
+# For each topic:
+# - name    : name identifier to select the topic (*sub-namespace, see below)
+# - topic   : input topic of sensor_msgs::Joy type
+# - timeout : timeout in seconds to start discarding old messages, and use 0.0 speed instead
+# - priority: priority in the range [0, 255]; the higher the more priority over other topics
+
+#TODO : donner des noms radoms
+#TODO : topics a specifer au moment de test
+joy_mux:
+  ros__parameters:
+    topics:
+      name:
+        topic   : 
+        timeout : 0.5
+        priority: 10
+      name:
+        topic   : 
+        timeout : 0.5
+        priority: 100
+      name:
+        topic   : 
+        timeout : 0.5
+        priority: 90
+      name:
+        topic   : 
+        timeout : 0.5
+        priority: 100
