@@ -10,19 +10,19 @@
 joy_mux:
   ros__parameters:
     topics:
-      name:
-        topic   : 
+      joy1:
+        topic   : joy1
         timeout : 0.5
         priority: 10
-      name:
-        topic   : 
+      joy2:
+        topic   : joy2
         timeout : 0.5
         priority: 100
-      name:
-        topic   : 
+      joy3:
+        topic   : joy3
         timeout : 0.5
         priority: 90
-      name:
-        topic   : 
+      joy4:
+        topic   : joy4
         timeout : 0.5
         priority: 100

@@ -26,11 +26,10 @@ add_executable(joy_mux
 )
 ament_target_dependencies(joy_mux ${DEPENDENCIES})
 
-#pas sur si necessaire
-# install(
-#   DIRECTORY include/
-#   DESTINATION include
-# )
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
 
 #Install Node
 install(
@@ -41,6 +40,10 @@ install(
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
+foreach(dir launch config)
+  install(DIRECTORY ${dir}/
+    DESTINATION share/${PROJECT_NAME}/${dir})
+endforeach()
 
 # if(BUILD_TESTING)
 #   find_package(ament_lint_auto REQUIRED)

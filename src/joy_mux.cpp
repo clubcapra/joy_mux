@@ -11,7 +11,7 @@ namespace joy_mux {
         {}
 
     void JoyMux::init() {
-
+        RCLCPP_INFO(get_logger(), "Initializing Joy Mux Node");
         //TODO : est-ce necessaire? on ignore (a chancher plus tard)
         bool use_stamped = true;
         this->declare_parameter("use_stamped", use_stamped);
