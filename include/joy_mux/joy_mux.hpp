@@ -48,7 +48,7 @@ namespace joy_mux {
             sensor_msgs::msg::Joy last_status_;
 
             template<typename T>
-            void getTopicHandles(const std::string & param_name, std::list<T> & topic_hs);
+            void getTopicHandles(const std::string & param_name, handle_container<T> & topic_hs);
 
             //int getLockPriority(); //TODO: implement lock topics
     };
