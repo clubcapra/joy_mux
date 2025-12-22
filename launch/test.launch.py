@@ -24,16 +24,19 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    default_config_joystick = os.path.join(get_package_share_directory('joy_mux'),
+    default_config_topics = os.path.join(get_package_share_directory('joy_mux'),
                                            'config', 'joy_mux_topics.yaml')
 
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'config_topics',
+            default_value=default_config_topics,
+            description='Default topics config file'),
         Node(
             package='joy_mux',
             executable='joy_mux',
             output='screen',
             # remappings={()},
-            parameters=[
-                default_config_joystick]
+            parameters=[LaunchConfiguration('config_topics')]
         ),
     ])

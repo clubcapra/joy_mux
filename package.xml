@@ -7,7 +7,7 @@
     Joy multiplexer, wich multiplex different joysitcks inputs
     and allow to prioritize them. Based on the original ROS2 Twist multiplexer.
   </description>
-  <maintainer email="rodrigot@videotron.ca">rodrigo</maintainer>
+  <maintainer email="a.rodrigo.tp@gmail.com">Rodrigo Torres</maintainer>
   <license>Apache-2.0</license>
 
   <author email="a.rodrigo.tp@gmail.com">Rodrigo Torres</author>
@@ -17,6 +17,7 @@
   <depend>rclcpp</depend>
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
+
   
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

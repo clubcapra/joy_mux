@@ -15,7 +15,6 @@ namespace joy_mux{
     template<typename T>
     class TopicHandler_{
         public :
-            //Singleton
             TopicHandler_(TopicHandler_ &) = delete;
             TopicHandler_(const TopicHandler_ &) = delete;
 
@@ -35,7 +34,7 @@ namespace joy_mux{
                 stamp_(0) {
                     RCLCPP_INFO(
                         mux_->get_logger(),
-                        "Created TopicHandler '%s' subscribed to topic '%s': timeout = '%.2f', priority %d",
+                        "Created TopicHandler '%s' subscribed to topic '%s': timeout = '%.2s', priority %d",
                         name_.c_str(),
                         topic_.c_str(),
                         ((timeout_.seconds()>0) ? std::to_string(timeout_.seconds()) + "s" : "None").c_str(),
@@ -80,7 +79,8 @@ namespace joy_mux{
             typename rclcpp::Subscription<T>::SharedPtr subscriber_;
             rclcpp::Duration timeout_;
             priority_type priority_;
-            
+        
+        protected:
             //TODO : pas sur ils font quoi
             JoyMux * mux_;
             rclcpp::Time stamp_;
@@ -95,10 +95,13 @@ namespace joy_mux{
             typedef typename base_type::priority_type priority_type;
 
             //Constructor
-            JoyTopicHandler( const std::string & name, const std::string & topic, 
+            JoyTopicHandler(const std::string & name, const std::string & topic, 
                             const rclcpp::Duration & timeout, priority_type priority, JoyMux * mux)
-                : base_type(name, topic, timeout, priority, mux){
+            : base_type(name, topic, timeout, priority, mux){
                     //Create subscriber
+                    RCLCPP_INFO(mux_->get_logger(), 
+                                "Creating subscriber for TopicHandler '%s' on topic '%s'", name_.c_str(), topic_.c_str());
+                                
                     subscriber_ = mux_->create_subscription<sensor_msgs::msg::Joy>(
                         topic_,
                         rclcpp::SystemDefaultsQoS(),//TODO Q: ca fait quoi?
@@ -106,12 +109,22 @@ namespace joy_mux{
                     );
                 }
             
-            void callback(const sensor_msgs::msg::Joy::SharedPtr msg){//TODO Q: pourquoi c'est appelé callback() et non publish()?
-                stamp_ = mux_->now();//TODO Q : pas sur de ca fait quoi
+            bool isMasked(priority_type priority) const {
+                return hasExpired() || (getPriority() < priority);
+            }
+            
+            void callback(const sensor_msgs::msg::Joy::SharedPtr msg){
+                stamp_ = mux_->now();
                 msg_ = *msg;
 
                 // Verify that the message has the higehst priority
-                if(mux_->hasPriority(*this)){ 
+                if(mux_->hasPriority(*this)){   
+                    RCLCPP_INFO(
+                        mux_->get_logger(),
+                        "TopicHandler '%s' has highest priority (%d). Publishing message.",
+                        name_.c_str(),
+                        static_cast<int>(priority_)
+                    );
                     mux_->publishJoy(msg);
                 }
             }
