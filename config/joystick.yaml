@@ -1,4 +1,3 @@
-#TODO Q : Necessaire?
 joystick_relay:
   ros__parameters:
     priority: True

@@ -4,18 +4,15 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <sensor_msgs/msg/joy.hpp>
-//#include <sensor_msgs/msg/joy_stamped.hpp> // n'existe pas
 
 #include <list>
 #include <memory>
 #include <string>
 
-//using std::chrono_literals::operator""s; //TODO: pour diagnostics
-
 namespace joy_mux {
     //Forward declarations and definitions
     class JoyTopicHandler;
-   // class JoyStampedTopicHandler
+   // class JoyStampedTopicHandler //TODO: to implement if needed
 
 
     class JoyMux : public rclcpp::Node {
@@ -24,7 +21,7 @@ namespace joy_mux {
             using handle_container = std::list<T>;
 
             using joy_topic_container = handle_container<JoyTopicHandler>;
-            //using lock_topic_container = handle_container<LockTopicHangler>; //TODO : to implement
+            //using lock_topic_container = handle_container<LockTopicHangler>; //TODO : to implement if needed
 
             JoyMux();
             ~JoyMux() = default;
@@ -35,7 +32,7 @@ namespace joy_mux {
             
             void publishJoy(const sensor_msgs::msg::Joy::SharedPtr & msg);
 
-            //void updateDiagnostics(); //TODO: implement diagnostics
+            //void updateDiagnostics(); //TODO: implement diagnostics if needed
         
         protected:
 
@@ -50,7 +47,7 @@ namespace joy_mux {
             template<typename T>
             void getTopicHandles(const std::string & param_name, handle_container<T> & topic_hs);
 
-            //int getLockPriority(); //TODO: implement lock topics
+            //int getLockPriority(); //TODO: implement lock topics if needed
     };
 
 

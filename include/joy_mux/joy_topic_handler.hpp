@@ -81,7 +81,6 @@ namespace joy_mux{
             priority_type priority_;
         
         protected:
-            //TODO : pas sur ils font quoi
             JoyMux * mux_;
             rclcpp::Time stamp_;
             T msg_;

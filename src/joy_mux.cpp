@@ -4,8 +4,6 @@
 
 namespace joy_mux {
 
-    // constexpr std::chrono::duration<int64_t> JoyMux::DIAGNOSTICS_PERIOD;
-
     JoyMux::JoyMux()
         : Node("joy_mux", "", 
             rclcpp::NodeOptions().allow_undeclared_parameters(true).automatically_declare_parameters_from_overrides(true))//A garder sinon on trouve pas les topics
@@ -13,14 +11,12 @@ namespace joy_mux {
 
     void JoyMux::init() {
         RCLCPP_INFO(get_logger(), "Initializing Joy Mux Node");
-        //TODO : est-ce necessaire? on ignore (a chancher plus tard)
+        //TODO : a chancher plus tard si besoin
         bool use_stamped = true;
         this->declare_parameter("use_stamped", use_stamped);
 
         auto nh = std::shared_ptr<rclcpp::Node>(this, [](rclcpp::Node *) {});
         fetch_param(nh, "use_stamped", use_stamped);
-
-        //if(use_stamped){} // n'existe pas de joy_stamped, doit creer un joy_stamped?
 
         //Get topic
         joy_hs_ = std::make_shared<joy_topic_container>();
