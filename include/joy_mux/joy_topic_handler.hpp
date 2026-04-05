@@ -89,6 +89,7 @@ namespace joy_mux{
     class JoyTopicHandler : public TopicHandler_<sensor_msgs::msg::Joy>{
         private:
             typedef TopicHandler_<sensor_msgs::msg::Joy> base_type;
+            bool last_highest_priority_ = false;
 
         public:
             typedef typename base_type::priority_type priority_type;
@@ -117,14 +118,19 @@ namespace joy_mux{
                 msg_ = *msg;
 
                 // Verify that the message has the higehst priority
-                if(mux_->hasPriority(*this)){   
-                    RCLCPP_INFO(
-                        mux_->get_logger(),
-                        "TopicHandler '%s' has highest priority (%d). Publishing message.",
-                        name_.c_str(),
-                        static_cast<int>(priority_)
-                    );
+                if(mux_->hasPriority(*this)){
+                    if (!last_highest_priority_) {
+                        RCLCPP_INFO(
+                            mux_->get_logger(),
+                            "TopicHandler '%s' has highest priority (%d). Publishing message.",
+                            name_.c_str(),
+                            static_cast<int>(priority_)
+                        );
+                    }
                     mux_->publishJoy(msg);
+                    last_highest_priority_ = true;
+                } else {
+                    last_highest_priority_ = false;
                 }
             }
 

@@ -44,12 +44,12 @@ namespace joy_mux {
             }
         }
 
-        RCLCPP_DEBUG(get_logger(), "Highest priority joy is '%s' with priority %d", joy_name.c_str(), static_cast<int>(priority));
+        // RCLCPP_DEBUG(get_logger(), "Highest priority joy is '%s' with priority %d", joy_name.c_str(), static_cast<int>(priority));
         return joy.getName() == joy_name;
     }
 
     void JoyMux::publishJoy(const sensor_msgs::msg::Joy::SharedPtr & msg) {
-        RCLCPP_INFO(get_logger(), "Publishing Joy message : axes size = %zu, buttons size = %zu", msg->axes.size(), msg->buttons.size());
+        // RCLCPP_INFO(get_logger(), "Publishing Joy message : axes size = %zu, buttons size = %zu", msg->axes.size(), msg->buttons.size());
         joy_publisher_->publish(*msg);
     }
 
